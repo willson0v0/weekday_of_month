@@ -1,0 +1,14 @@
+{
+    "domain": "weekday_of_month",
+    "name": "Weekday of month",
+    "codeowners": ["@willson0v0"],
+    "config_flow": true,
+    "dependencies": [],
+    "documentation": "https://github.com/willson0v0/weekday_of_month/blob/master/README.md",
+    "homekit": {},
+    "iot_class": "local_polling",
+    "requirements": [],
+    "ssdp": [],
+    "version": "0.1.0",
+    "zeroconf": []
+  }

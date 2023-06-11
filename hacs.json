@@ -1,0 +1,10 @@
+{
+    "name": "Nth-weekday of the month",
+    "content_in_root": false,
+    "render_readme": true,
+    "domains": [
+        "sensor"
+    ],
+    "iot_class": "Local Polling",
+    "homeassistant": "2023.6.0"
+}

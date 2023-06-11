@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 from datetime import date, timedelta
+import calendar
 from typing import Any
 
 import holidays
@@ -122,7 +123,22 @@ class NthWeekdayOfMonthSensor(BinarySensorEntity):
         )
         self._attr_is_on = True
 
+    def is_specified_weekday_of_month(self, weekday: str, nth: int):
+        current_date = dt_util.now()
+        current_weekday = current_date.isoweekday() - 1
+        if ALLOWED_DAYS[current_weekday] != weekday:
+            return False
+        month = calendar.monthcalendar(current_date.year, current_date.month)
+        if nth > 0 or not month[nth][current_weekday]:
+            return month[nth - 1][current_weekday] == current_date.day
+        else:
+            return month[nth][current_weekday] == current_date.day
+
     async def async_update(self) -> None:
-        """Get date and look whether it is a holiday."""
-        # Default is no workday
-        self._attr_is_on = not self._attr_is_on
+        """Get date and check about it."""
+        self._attr_is_on = False
+        for weekday in self._weekdays:
+            for nth in self._nth_weekday:
+                if self.is_specified_weekday_of_month(weekday, int(nth)):
+                    self._attr_is_on = True
+                    return
